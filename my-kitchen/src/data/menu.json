@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "classic pizza", "price": 10, "type": "Main", "image": "/images/classic-pizza.jpg" },
+  { "id": 2, "name": "panner pizza", "price": 8, "type": "Main", "image": "/images/panner-pizza.jpeg" },
+  { "id": 3, "name": "margiratea pizza", "price": 12, "type": "Main", "image": "/images/margiratea-pizza.jpeg" },
+  { "id": 4, "name": "mixed veg pizza", "price": 5, "type": "Main", "image": "/images/mixed-veg-pizza.jpeg" },
+  { "id": 5, "name": "mixed non-veg pizza", "price": 3, "type": "Main", "image": "/images/mixed-non-veg-pizza.jpg" },
+  { "id": 6, "name": "strobary choclate thickshake", "price": 4, "type": "Drink", "image": "/images/strobary-choclate-thickshake.webp" },
+  { "id": 7, "name": "vennila thickshake", "price": 9, "type": "Drink", "image": "/images/vennila-thickshake.jpg" }
+]
