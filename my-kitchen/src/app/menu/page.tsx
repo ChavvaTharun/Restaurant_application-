@@ -15,7 +15,7 @@ interface MenuItem {
   id: number;
   name: string;
   price: number;
-  type: string;
+  type: string;  // veg, non-veg, drinks etc.
   image: string;
 }
 
@@ -31,6 +31,7 @@ export default function Menu() {
 
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+  const [filterType, setFilterType] = useState<string>("all"); // 👈 filter state
 
   useEffect(() => setMenuItems(menuData), []);
 
@@ -51,18 +52,46 @@ export default function Menu() {
     dispatch(addOrder({ tableId, items: selectedItems, total }));
     dispatch(reserveTable(tableId));
     dispatch(addBill({ id: Date.now(), tableId, total }));
-    dispatch(addRevenue({ tableId, total, date: new Date().toLocaleDateString() }));
+    dispatch(addRevenue({ orderId: Date.now(), tableId, total, date: new Date().toLocaleDateString() }));
 
     router.push(`/orders?table=${tableId}`);
   };
 
+  // 👇 filter menu items
+  const filteredItems = filterType === "all"
+    ? menuItems
+    : menuItems.filter(item => item.type.toLowerCase() === filterType.toLowerCase());
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Menu - Table {tableId}</h2>
+
+      {/* Filter Dropdown */}
+      <div className="mb-4">
+        <label className="mr-2 font-semibold">Filter by Type:</label>
+        <select
+          value={filterType}
+          onChange={e => setFilterType(e.target.value)}
+          className="border px-2 py-1 rounded"
+        >
+          <option value="all">All</option>
+          <option value="Main">Main</option>
+          <option value="Burger">Burger</option>
+          <option value="Drink">Drinks</option>
+          <option value="Snacks">Snacks</option>
+          <option value="Sandwich">Sandwich</option>
+          <option value="French Fries">French Fries</option>
+          <option value="Tiffins">Tiffins</option>
+          <option value="Bread">Bread</option>
+          <option value="Pastha">Pastha</option>
+          <option value="Noodles">Noodles</option>
+        </select>
+      </div>
+
       <div className="row">
         <div className="col-lg-8 col-md-12">
           <div className={styles.grid}>
-            {menuItems.map(item => (
+            {filteredItems.map(item => (
               <div key={item.id} className={styles.card}>
                 <img src={item.image} alt={item.name} />
                 <div className={styles.cardContent}>
@@ -110,6 +139,5 @@ export default function Menu() {
         </div>
       </div>
     </div>
-
   );
 }
